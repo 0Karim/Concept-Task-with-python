@@ -1,0 +1,572 @@
+Created by PLY version 3.9 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> switch
+Rule 1     switch -> switch_stmt
+Rule 2     switch -> empty
+Rule 3     empty -> <empty>
+Rule 4     switch_stmt -> SWITCH LPAREN ID RPAREN LCARL list_code
+Rule 5     list_code -> CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON
+Rule 6     list_code -> CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON list_code
+Rule 7     list_code -> default
+Rule 8     default -> DEFAULT COLON stmt_list SEMICOLON BREAK SEMICOLON RCARL
+Rule 9     var -> NUMBER
+Rule 10    var -> ID
+Rule 11    stmt_list -> stmt
+Rule 12    stmt_list -> expression
+Rule 13    stmt -> ID EQUL expression
+Rule 14    stmt -> ID
+Rule 15    expression -> expression PLUS term
+Rule 16    expression -> expression MINUS term
+Rule 17    expression -> term
+Rule 18    term -> term TIMES factor
+Rule 19    term -> term DIVID factor
+Rule 20    term -> factor
+Rule 21    factor -> NUMBER
+Rule 22    factor -> LPAREN expression RPAREN
+
+Terminals, with rules where they appear
+
+BREAK                : 5 6 8
+CASE                 : 5 6
+COLON                : 5 6 8
+DEFAULT              : 8
+DIVID                : 19
+EQUL                 : 13
+ID                   : 4 10 13 14
+LCARL                : 4
+LPAREN               : 4 22
+MINUS                : 16
+NUMBER               : 9 21
+PLUS                 : 15
+RCARL                : 8
+RPAREN               : 4 22
+SEMICOLON            : 5 5 6 6 8 8
+SWITCH               : 4
+TIMES                : 18
+error                : 
+
+Nonterminals, with rules where they appear
+
+default              : 7
+empty                : 2
+expression           : 12 13 15 16 22
+factor               : 18 19 20
+list_code            : 4 6
+stmt                 : 11
+stmt_list            : 5 6 8
+switch               : 0
+switch_stmt          : 1
+term                 : 15 16 17 18 19
+var                  : 5 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . switch
+    (1) switch -> . switch_stmt
+    (2) switch -> . empty
+    (4) switch_stmt -> . SWITCH LPAREN ID RPAREN LCARL list_code
+    (3) empty -> .
+
+    SWITCH          shift and go to state 2
+    $end            reduce using rule 3 (empty -> .)
+
+    switch_stmt                    shift and go to state 3
+    empty                          shift and go to state 1
+    switch                         shift and go to state 4
+
+state 1
+
+    (2) switch -> empty .
+
+    $end            reduce using rule 2 (switch -> empty .)
+
+
+state 2
+
+    (4) switch_stmt -> SWITCH . LPAREN ID RPAREN LCARL list_code
+
+    LPAREN          shift and go to state 5
+
+
+state 3
+
+    (1) switch -> switch_stmt .
+
+    $end            reduce using rule 1 (switch -> switch_stmt .)
+
+
+state 4
+
+    (0) S' -> switch .
+
+
+
+state 5
+
+    (4) switch_stmt -> SWITCH LPAREN . ID RPAREN LCARL list_code
+
+    ID              shift and go to state 6
+
+
+state 6
+
+    (4) switch_stmt -> SWITCH LPAREN ID . RPAREN LCARL list_code
+
+    RPAREN          shift and go to state 7
+
+
+state 7
+
+    (4) switch_stmt -> SWITCH LPAREN ID RPAREN . LCARL list_code
+
+    LCARL           shift and go to state 8
+
+
+state 8
+
+    (4) switch_stmt -> SWITCH LPAREN ID RPAREN LCARL . list_code
+    (5) list_code -> . CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON
+    (6) list_code -> . CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON list_code
+    (7) list_code -> . default
+    (8) default -> . DEFAULT COLON stmt_list SEMICOLON BREAK SEMICOLON RCARL
+
+    CASE            shift and go to state 9
+    DEFAULT         shift and go to state 11
+
+    list_code                      shift and go to state 12
+    default                        shift and go to state 10
+
+state 9
+
+    (5) list_code -> CASE . var COLON stmt_list SEMICOLON BREAK SEMICOLON
+    (6) list_code -> CASE . var COLON stmt_list SEMICOLON BREAK SEMICOLON list_code
+    (9) var -> . NUMBER
+    (10) var -> . ID
+
+    NUMBER          shift and go to state 15
+    ID              shift and go to state 14
+
+    var                            shift and go to state 13
+
+state 10
+
+    (7) list_code -> default .
+
+    $end            reduce using rule 7 (list_code -> default .)
+
+
+state 11
+
+    (8) default -> DEFAULT . COLON stmt_list SEMICOLON BREAK SEMICOLON RCARL
+
+    COLON           shift and go to state 16
+
+
+state 12
+
+    (4) switch_stmt -> SWITCH LPAREN ID RPAREN LCARL list_code .
+
+    $end            reduce using rule 4 (switch_stmt -> SWITCH LPAREN ID RPAREN LCARL list_code .)
+
+
+state 13
+
+    (5) list_code -> CASE var . COLON stmt_list SEMICOLON BREAK SEMICOLON
+    (6) list_code -> CASE var . COLON stmt_list SEMICOLON BREAK SEMICOLON list_code
+
+    COLON           shift and go to state 17
+
+
+state 14
+
+    (10) var -> ID .
+
+    COLON           reduce using rule 10 (var -> ID .)
+
+
+state 15
+
+    (9) var -> NUMBER .
+
+    COLON           reduce using rule 9 (var -> NUMBER .)
+
+
+state 16
+
+    (8) default -> DEFAULT COLON . stmt_list SEMICOLON BREAK SEMICOLON RCARL
+    (11) stmt_list -> . stmt
+    (12) stmt_list -> . expression
+    (13) stmt -> . ID EQUL expression
+    (14) stmt -> . ID
+    (15) expression -> . expression PLUS term
+    (16) expression -> . expression MINUS term
+    (17) expression -> . term
+    (18) term -> . term TIMES factor
+    (19) term -> . term DIVID factor
+    (20) term -> . factor
+    (21) factor -> . NUMBER
+    (22) factor -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 19
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 23
+
+    term                           shift and go to state 21
+    stmt                           shift and go to state 22
+    stmt_list                      shift and go to state 25
+    expression                     shift and go to state 18
+    factor                         shift and go to state 24
+
+state 17
+
+    (5) list_code -> CASE var COLON . stmt_list SEMICOLON BREAK SEMICOLON
+    (6) list_code -> CASE var COLON . stmt_list SEMICOLON BREAK SEMICOLON list_code
+    (11) stmt_list -> . stmt
+    (12) stmt_list -> . expression
+    (13) stmt -> . ID EQUL expression
+    (14) stmt -> . ID
+    (15) expression -> . expression PLUS term
+    (16) expression -> . expression MINUS term
+    (17) expression -> . term
+    (18) term -> . term TIMES factor
+    (19) term -> . term DIVID factor
+    (20) term -> . factor
+    (21) factor -> . NUMBER
+    (22) factor -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 19
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 23
+
+    term                           shift and go to state 21
+    stmt                           shift and go to state 22
+    expression                     shift and go to state 18
+    factor                         shift and go to state 24
+    stmt_list                      shift and go to state 26
+
+state 18
+
+    (12) stmt_list -> expression .
+    (15) expression -> expression . PLUS term
+    (16) expression -> expression . MINUS term
+
+    SEMICOLON       reduce using rule 12 (stmt_list -> expression .)
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 27
+
+
+state 19
+
+    (13) stmt -> ID . EQUL expression
+    (14) stmt -> ID .
+
+    EQUL            shift and go to state 29
+    SEMICOLON       reduce using rule 14 (stmt -> ID .)
+
+
+state 20
+
+    (21) factor -> NUMBER .
+
+    TIMES           reduce using rule 21 (factor -> NUMBER .)
+    DIVID           reduce using rule 21 (factor -> NUMBER .)
+    PLUS            reduce using rule 21 (factor -> NUMBER .)
+    MINUS           reduce using rule 21 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 21 (factor -> NUMBER .)
+    RPAREN          reduce using rule 21 (factor -> NUMBER .)
+
+
+state 21
+
+    (17) expression -> term .
+    (18) term -> term . TIMES factor
+    (19) term -> term . DIVID factor
+
+    PLUS            reduce using rule 17 (expression -> term .)
+    MINUS           reduce using rule 17 (expression -> term .)
+    SEMICOLON       reduce using rule 17 (expression -> term .)
+    RPAREN          reduce using rule 17 (expression -> term .)
+    TIMES           shift and go to state 31
+    DIVID           shift and go to state 30
+
+
+state 22
+
+    (11) stmt_list -> stmt .
+
+    SEMICOLON       reduce using rule 11 (stmt_list -> stmt .)
+
+
+state 23
+
+    (22) factor -> LPAREN . expression RPAREN
+    (15) expression -> . expression PLUS term
+    (16) expression -> . expression MINUS term
+    (17) expression -> . term
+    (18) term -> . term TIMES factor
+    (19) term -> . term DIVID factor
+    (20) term -> . factor
+    (21) factor -> . NUMBER
+    (22) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 23
+
+    term                           shift and go to state 21
+    expression                     shift and go to state 32
+    factor                         shift and go to state 24
+
+state 24
+
+    (20) term -> factor .
+
+    TIMES           reduce using rule 20 (term -> factor .)
+    DIVID           reduce using rule 20 (term -> factor .)
+    PLUS            reduce using rule 20 (term -> factor .)
+    MINUS           reduce using rule 20 (term -> factor .)
+    SEMICOLON       reduce using rule 20 (term -> factor .)
+    RPAREN          reduce using rule 20 (term -> factor .)
+
+
+state 25
+
+    (8) default -> DEFAULT COLON stmt_list . SEMICOLON BREAK SEMICOLON RCARL
+
+    SEMICOLON       shift and go to state 33
+
+
+state 26
+
+    (5) list_code -> CASE var COLON stmt_list . SEMICOLON BREAK SEMICOLON
+    (6) list_code -> CASE var COLON stmt_list . SEMICOLON BREAK SEMICOLON list_code
+
+    SEMICOLON       shift and go to state 34
+
+
+state 27
+
+    (16) expression -> expression MINUS . term
+    (18) term -> . term TIMES factor
+    (19) term -> . term DIVID factor
+    (20) term -> . factor
+    (21) factor -> . NUMBER
+    (22) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 23
+
+    term                           shift and go to state 35
+    factor                         shift and go to state 24
+
+state 28
+
+    (15) expression -> expression PLUS . term
+    (18) term -> . term TIMES factor
+    (19) term -> . term DIVID factor
+    (20) term -> . factor
+    (21) factor -> . NUMBER
+    (22) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 23
+
+    term                           shift and go to state 36
+    factor                         shift and go to state 24
+
+state 29
+
+    (13) stmt -> ID EQUL . expression
+    (15) expression -> . expression PLUS term
+    (16) expression -> . expression MINUS term
+    (17) expression -> . term
+    (18) term -> . term TIMES factor
+    (19) term -> . term DIVID factor
+    (20) term -> . factor
+    (21) factor -> . NUMBER
+    (22) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 23
+
+    term                           shift and go to state 21
+    expression                     shift and go to state 37
+    factor                         shift and go to state 24
+
+state 30
+
+    (19) term -> term DIVID . factor
+    (21) factor -> . NUMBER
+    (22) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 23
+
+    factor                         shift and go to state 38
+
+state 31
+
+    (18) term -> term TIMES . factor
+    (21) factor -> . NUMBER
+    (22) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 20
+    LPAREN          shift and go to state 23
+
+    factor                         shift and go to state 39
+
+state 32
+
+    (22) factor -> LPAREN expression . RPAREN
+    (15) expression -> expression . PLUS term
+    (16) expression -> expression . MINUS term
+
+    RPAREN          shift and go to state 40
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 27
+
+
+state 33
+
+    (8) default -> DEFAULT COLON stmt_list SEMICOLON . BREAK SEMICOLON RCARL
+
+    BREAK           shift and go to state 41
+
+
+state 34
+
+    (5) list_code -> CASE var COLON stmt_list SEMICOLON . BREAK SEMICOLON
+    (6) list_code -> CASE var COLON stmt_list SEMICOLON . BREAK SEMICOLON list_code
+
+    BREAK           shift and go to state 42
+
+
+state 35
+
+    (16) expression -> expression MINUS term .
+    (18) term -> term . TIMES factor
+    (19) term -> term . DIVID factor
+
+    PLUS            reduce using rule 16 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 16 (expression -> expression MINUS term .)
+    SEMICOLON       reduce using rule 16 (expression -> expression MINUS term .)
+    RPAREN          reduce using rule 16 (expression -> expression MINUS term .)
+    TIMES           shift and go to state 31
+    DIVID           shift and go to state 30
+
+
+state 36
+
+    (15) expression -> expression PLUS term .
+    (18) term -> term . TIMES factor
+    (19) term -> term . DIVID factor
+
+    PLUS            reduce using rule 15 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 15 (expression -> expression PLUS term .)
+    SEMICOLON       reduce using rule 15 (expression -> expression PLUS term .)
+    RPAREN          reduce using rule 15 (expression -> expression PLUS term .)
+    TIMES           shift and go to state 31
+    DIVID           shift and go to state 30
+
+
+state 37
+
+    (13) stmt -> ID EQUL expression .
+    (15) expression -> expression . PLUS term
+    (16) expression -> expression . MINUS term
+
+    SEMICOLON       reduce using rule 13 (stmt -> ID EQUL expression .)
+    PLUS            shift and go to state 28
+    MINUS           shift and go to state 27
+
+
+state 38
+
+    (19) term -> term DIVID factor .
+
+    TIMES           reduce using rule 19 (term -> term DIVID factor .)
+    DIVID           reduce using rule 19 (term -> term DIVID factor .)
+    PLUS            reduce using rule 19 (term -> term DIVID factor .)
+    MINUS           reduce using rule 19 (term -> term DIVID factor .)
+    SEMICOLON       reduce using rule 19 (term -> term DIVID factor .)
+    RPAREN          reduce using rule 19 (term -> term DIVID factor .)
+
+
+state 39
+
+    (18) term -> term TIMES factor .
+
+    TIMES           reduce using rule 18 (term -> term TIMES factor .)
+    DIVID           reduce using rule 18 (term -> term TIMES factor .)
+    PLUS            reduce using rule 18 (term -> term TIMES factor .)
+    MINUS           reduce using rule 18 (term -> term TIMES factor .)
+    SEMICOLON       reduce using rule 18 (term -> term TIMES factor .)
+    RPAREN          reduce using rule 18 (term -> term TIMES factor .)
+
+
+state 40
+
+    (22) factor -> LPAREN expression RPAREN .
+
+    TIMES           reduce using rule 22 (factor -> LPAREN expression RPAREN .)
+    DIVID           reduce using rule 22 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 22 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 22 (factor -> LPAREN expression RPAREN .)
+    SEMICOLON       reduce using rule 22 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 22 (factor -> LPAREN expression RPAREN .)
+
+
+state 41
+
+    (8) default -> DEFAULT COLON stmt_list SEMICOLON BREAK . SEMICOLON RCARL
+
+    SEMICOLON       shift and go to state 43
+
+
+state 42
+
+    (5) list_code -> CASE var COLON stmt_list SEMICOLON BREAK . SEMICOLON
+    (6) list_code -> CASE var COLON stmt_list SEMICOLON BREAK . SEMICOLON list_code
+
+    SEMICOLON       shift and go to state 44
+
+
+state 43
+
+    (8) default -> DEFAULT COLON stmt_list SEMICOLON BREAK SEMICOLON . RCARL
+
+    RCARL           shift and go to state 45
+
+
+state 44
+
+    (5) list_code -> CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON .
+    (6) list_code -> CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON . list_code
+    (5) list_code -> . CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON
+    (6) list_code -> . CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON list_code
+    (7) list_code -> . default
+    (8) default -> . DEFAULT COLON stmt_list SEMICOLON BREAK SEMICOLON RCARL
+
+    $end            reduce using rule 5 (list_code -> CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON .)
+    CASE            shift and go to state 9
+    DEFAULT         shift and go to state 11
+
+    list_code                      shift and go to state 46
+    default                        shift and go to state 10
+
+state 45
+
+    (8) default -> DEFAULT COLON stmt_list SEMICOLON BREAK SEMICOLON RCARL .
+
+    $end            reduce using rule 8 (default -> DEFAULT COLON stmt_list SEMICOLON BREAK SEMICOLON RCARL .)
+
+
+state 46
+
+    (6) list_code -> CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON list_code .
+
+    $end            reduce using rule 6 (list_code -> CASE var COLON stmt_list SEMICOLON BREAK SEMICOLON list_code .)
+
